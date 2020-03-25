@@ -45,9 +45,15 @@ void CNMEAParser::ResetData(void)
 	m_GPGGA.ResetData();
 	m_GPGSV.ResetData();
 	m_GPGSA.ResetData();
+    m_GPZDA.ResetData();    //add by Caesar in 2020/03/25
+    m_GPVTG.ResetData();    //add by Caesar in 2020/03/25
+    m_GPGLL.ResetData();    //add by Caesar in 2020/03/25
     m_GNGSA.ResetData();
 	m_GNGGA.ResetData();
 	m_GNRMC.ResetData();
+    m_GNZDA.ResetData();    //add by Caesar in 2020/03/25
+    m_GNVTG.ResetData();    //add by Caesar in 2020/03/25
+    m_GNGLL.ResetData();    //add by Caesar in 2020/03/25
 	m_GLGSV.ResetData();
 	m_GLGSA.ResetData();
 	m_QZGSV.ResetData();
@@ -203,6 +209,60 @@ CNMEAParserData::ERROR_E CNMEAParser::GetGARMC(CNMEAParserData::RMC_DATA_T & sen
 	return CNMEAParserData::ERROR_OK;
 }
 
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGPZDA(CNMEAParserData::ZDA_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GPZDA.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGNZDA(CNMEAParserData::ZDA_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GNZDA.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGPVTG(CNMEAParserData::VTG_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GPVTG.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGNVTG(CNMEAParserData::VTG_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GNVTG.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGPGLL(CNMEAParserData::GLL_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GPGLL.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
+//add by Caesar in 2020/03/25
+CNMEAParserData::ERROR_E CNMEAParser::GetGNGLL(CNMEAParserData::GLL_DATA_T & sentenseData)
+{
+    DataAccessSemaphoreLock();
+    sentenseData = m_GNGLL.GetSentenceData();
+    DataAccessSemaphoreUnlock();
+    return CNMEAParserData::ERROR_OK;
+}
+
 CNMEAParserData::ERROR_E CNMEAParser::ProcessRxCommand(char * pCmd, char * pData)
 {
 
@@ -311,7 +371,36 @@ CNMEAParserData::ERROR_E CNMEAParser::ProcessRxCommand(char * pCmd, char * pData
 		m_BDGSA.ProcessSentence(pCmd, pData);
 		DataAccessSemaphoreUnlock();
 	}
-
+    else if (strcmp(pCmd, "GPZDA") == 0) {
+        DataAccessSemaphoreLock();
+        m_GPZDA.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
+    else if (strcmp(pCmd, "GNZDA") == 0) {
+        DataAccessSemaphoreLock();
+        m_GNZDA.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
+    else if (strcmp(pCmd, "GPVTG") == 0) {
+        DataAccessSemaphoreLock();
+        m_GPVTG.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
+    else if (strcmp(pCmd, "GNVTG") == 0) {
+        DataAccessSemaphoreLock();
+        m_GNVTG.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
+    else if (strcmp(pCmd, "GPGLL") == 0) {
+        DataAccessSemaphoreLock();
+        m_GPGLL.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
+    else if (strcmp(pCmd, "GNGLL") == 0) {
+        DataAccessSemaphoreLock();
+        m_GNGLL.ProcessSentence(pCmd, pData);
+        DataAccessSemaphoreUnlock();
+    }
 
 	return CNMEAParserData::ERROR_OK;
 }

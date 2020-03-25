@@ -34,6 +34,9 @@
 #include "NMEASentenceGSV.h"
 #include "NMEASentenceGSA.h"
 #include "NMEASentenceRMC.h"
+#include "NMEASentenceZDA.h"
+#include "NMEASentenceVTG.h"
+#include "NMEASentenceGLL.h"
 
 ///
 /// \class CNMEAParser
@@ -48,6 +51,9 @@ private:
 	CNMEASentenceGSV	m_GPGSV;												///< GPGSV Satellite message (GPS)
 	CNMEASentenceGSA	m_GPGSA;												///< GPGSA GNSS DOP and active satellites
 	CNMEASentenceRMC	m_GPRMC;												///< GPRMC Recommended minimum data for GPS
+    CNMEASentenceZDA    m_GPZDA;                                                ///< GPZDA UTC time and date(add by Caesar in 2020/03/25)
+    CNMEASentenceVTG    m_GPVTG;                                                ///< GPVTG Surface velocity information(add by Caesar in 2020/03/25)
+    CNMEASentenceGLL    m_GPGLL;                                                ///< GPGLL Geolocation information(add by Caesar in 2020/03/25)
 
 	// Galileo
 	CNMEASentenceGGA	m_GAGGA;												///< GAGGA Specific sentence data
@@ -56,9 +62,12 @@ private:
 	CNMEASentenceRMC	m_GARMC;												///< GARMC Recommended minimum data for GPS
 
 	// GNSS
-	CNMEASentenceGGA	m_GNGGA;												///< GAGGA Specific sentence data
+    CNMEASentenceGGA	m_GNGGA;												///< GNGGA Specific sentence data
 	CNMEASentenceGSA	m_GNGSA;												///< GNGSA GNSS DOP and active satellites (usually GPS and GLONASS but can be GLONASS only)
 	CNMEASentenceRMC	m_GNRMC;												///< GNRMC Recommended minimum data for GPS
+    CNMEASentenceZDA    m_GNZDA;                                                ///< GNZDA UTC time and date(add by Caesar in 2020/03/25)
+    CNMEASentenceVTG    m_GNVTG;                                                ///< GNVTG Surface velocity information(add by Caesar in 2020/03/25)
+    CNMEASentenceGLL    m_GNGLL;                                                ///< GNGLL Geolocation information(add by Caesar in 2020/03/25)
 
 	// GLONASS
 	CNMEASentenceGSV	m_GLGSV;												///< GLGSV Satellite message (GLONASS)
@@ -199,6 +208,48 @@ public:
 	/// \return Returns ERROR_OK if successful.
 	///
 	CNMEAParserData::ERROR_E GetGARMC(CNMEAParserData::RMC_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GPZDA data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceZDA object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGPZDA(CNMEAParserData::ZDA_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GNZDA data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceZDA object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGNZDA(CNMEAParserData::ZDA_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GPVTG data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceVTG object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGPVTG(CNMEAParserData::VTG_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GNVTG data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceVTG object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGNVTG(CNMEAParserData::VTG_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GPGLL data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceGLL object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGPGLL(CNMEAParserData::GLL_DATA_T & sentenseData);
+
+    ///
+    /// \brief Places a copy of the GNGLL data into sentenseData
+    /// \param sentenseData reference to a CNMEASentenceGLL object to place the data into.
+    /// \return Returns ERROR_OK if successful.
+    ///
+    CNMEAParserData::ERROR_E GetGNGLL(CNMEAParserData::GLL_DATA_T & sentenseData);
 
 protected:
 	///

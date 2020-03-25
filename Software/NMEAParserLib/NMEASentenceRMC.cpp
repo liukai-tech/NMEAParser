@@ -100,7 +100,8 @@ CNMEAParserData::ERROR_E CNMEASentenceRMC::ProcessSentence(char *pCmd, char *pDa
 
     // Speed over ground knots
     if (GetField(pData, szField, 6, c_nMaxField) == CNMEAParserData::ERROR_OK) {
-        m_SentenceData.m_dSpeedKnots = atol(szField);
+//        m_SentenceData.m_dSpeedKnots = atol(szField);
+        m_SentenceData.m_dSpeedKnots = atof(szField);
         m_SentenceData.m_dSpeedKm = m_SentenceData.m_dSpeedKnots * NMEA_TUD_KNOTS;  //add by Caesar in 2020/03/16
     }
     else {
