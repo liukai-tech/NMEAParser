@@ -245,4 +245,55 @@ namespace CNMEAParserData {
 	    double			m_dMagneticVariation;									///< Magnetic Variation
 
 	} RMC_DATA_T;
+
+    ///
+    /// ZDA UTC time and date(add by Caesar in 2020/03/25)
+    ///
+    typedef struct _ZDA_DATA_T {
+
+        int				m_nHour;												///< hour
+        int				m_nMinute;												///< Minute
+        int				m_nSecond;												///< Second
+        int             m_nMillisecond;                                         ///< Millisecond
+        int				m_nMonth;												///< Month
+        int				m_nDay;													///< Day
+        int				m_nYear;												///< Year
+
+    } ZDA_DATA_T;
+
+    ///
+    /// VTG Surface velocity information(add by Caesar in 2020/03/25)
+    ///
+    typedef struct _VTG_DATA_T {
+
+        double			m_dTrackAngle;											///< Track angle in degrees True North
+        double          m_dMagneticAngle;                                       ///< angle in degrees Magnetic North
+        double			m_dSpeedKnots;											///< Speed over the ground in knots
+        double			m_dSpeedKm;                                             ///< Speed over the ground in km
+
+    } VTG_DATA_T;
+
+
+    ///
+    /// GLL Status field
+    ///
+    enum GLL_STATUS_E {
+        GLL_STATUS_ACTIVE = 'A',
+        GLL_STATUS_VOID = 'V',
+    };
+
+    ///
+    /// GLL Geolocation information(add by Caesar in 2020/03/25)
+    ///
+    typedef struct _GLL_DATA_T {
+
+        int				m_nHour;												///< hour
+        int				m_nMinute;												///< Minute
+        int				m_nSecond;												///< Second
+        int             m_nMillisecond;                                         ///< Millisecond
+        double			m_dLatitude;											///< Latitude (Decimal degrees, S < 0 > N)
+        double			m_dLongitude;											///< Longitude (Decimal degrees, W < 0 > E)
+        GLL_STATUS_E    m_nStatus;												///< Status
+
+    } GLL_DATA_T;
 };
