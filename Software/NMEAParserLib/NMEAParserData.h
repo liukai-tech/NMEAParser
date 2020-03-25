@@ -33,6 +33,8 @@
 ///
 #define UNUSED_PARAM(x) (void)(x)
 
+#define NMEA_TUD_KNOTS      (1.852)         /**< Knots, kilometer / NMEA_TUD_KNOTS = knot (add by Caesar in 2020/03/16)*/
+
 ///
 /// \class CNMEAParser
 /// \brief This class will parse NMEA data, store its data and report that it has received data
@@ -176,6 +178,7 @@ namespace CNMEAParserData {
 		int				m_nHour;												///< hour
 		int				m_nMinute;												///< Minute
 		int				m_nSecond;												///< Second
+        int             m_nMillisecond;                                         ///< Millisecond(add by Caesar in 2020/03/16)
 		double			m_dLatitude;											///< Latitude (Decimal degrees, S < 0 > N)
 		double			m_dLongitude;											///< Longitude (Decimal degrees, W < 0 > E)
 		double			m_dAltitudeMSL;											///< Altitude (Meters)
@@ -227,12 +230,14 @@ namespace CNMEAParserData {
 		int				m_nHour;												///< hour
 		int				m_nMinute;												///< Minute
 		int				m_nSecond;												///< Second
+        int             m_nMillisecond;                                         ///< Millisecond(add by Caesar in 2020/03/16)
 		double			m_dSecond;												///< Fractional second
 		double			m_dLatitude;											///< Latitude (Decimal degrees, S < 0 > N)
 		double			m_dLongitude;											///< Longitude (Decimal degrees, W < 0 > E)
 		double			m_dAltitudeMSL;											///< Altitude (Meters)
 		RMC_STATUS_E	m_nStatus;												///< Status
 		double			m_dSpeedKnots;											///< Speed over the ground in knots
+        double			m_dSpeedKm;                                             ///< Speed over the ground in km(add by Caesar in 2020/03/16)
 	    double			m_dTrackAngle;											///< Track angle in degrees True North
 	    int				m_nMonth;												///< Month
 	    int				m_nDay;													///< Day

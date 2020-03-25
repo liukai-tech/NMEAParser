@@ -52,6 +52,7 @@ CNMEAParserData::ERROR_E CNMEASentenceRMC::ProcessSentence(char *pCmd, char *pDa
 		m_SentenceData.m_nHour = (szField[0] - '0') * 10 + (szField[1] - '0');
 		m_SentenceData.m_nMinute = (szField[2] - '0') * 10 + (szField[3] - '0');
 		m_SentenceData.m_nSecond = (szField[4] - '0') * 10 + (szField[5] - '0');
+        m_SentenceData.m_nMillisecond = (szField[7] - '0') * 10;    //add Millisecond parsed by Caesar in 2020/03/16
 	}
 
 	// Status
@@ -97,13 +98,15 @@ CNMEAParserData::ERROR_E CNMEASentenceRMC::ProcessSentence(char *pCmd, char *pDa
 		}
 	}
 
-	// Speed over ground knots
-	if (GetField(pData, szField, 6, c_nMaxField) == CNMEAParserData::ERROR_OK) {
-		m_SentenceData.m_dSpeedKnots = atol(szField);
-	}
-	else {
-		m_SentenceData.m_dSpeedKnots = 0.0;
-	}
+    // Speed over ground knots
+    if (GetField(pData, szField, 6, c_nMaxField) == CNMEAParserData::ERROR_OK) {
+        m_SentenceData.m_dSpeedKnots = atol(szField);
+        m_SentenceData.m_dSpeedKm = m_SentenceData.m_dSpeedKnots * NMEA_TUD_KNOTS;  //add by Caesar in 2020/03/16
+    }
+    else {
+        m_SentenceData.m_dSpeedKnots = 0.0;
+        m_SentenceData.m_dSpeedKm = 0.0;    //add by Caesar in 2020/03/16
+    }
 
 	// Track Angle
 	if (GetField(pData, szField, 7, c_nMaxField) == CNMEAParserData::ERROR_OK) {
@@ -158,12 +161,14 @@ void CNMEASentenceRMC::ResetData(void) {
 	m_SentenceData.m_dMagneticVariation = 0.0;
 	m_SentenceData.m_dSecond = 0;
 	m_SentenceData.m_dSpeedKnots = 0.0;
+    m_SentenceData.m_dSpeedKm = 0.0;    //add by Caesar in 2020/03/16
 	m_SentenceData.m_dTrackAngle = 0.0;
 	m_SentenceData.m_nDay = 0;
 	m_SentenceData.m_nHour = 0;
 	m_SentenceData.m_nMinute = 0;
 	m_SentenceData.m_nMonth = 0;
 	m_SentenceData.m_nSecond = 0;
+    m_SentenceData.m_nMillisecond = 0;  //add by Caesar in 2020/03/16
 	m_SentenceData.m_nStatus = CNMEAParserData::RMC_STATUS_VOID;
 	m_SentenceData.m_nYear = 0;
 }

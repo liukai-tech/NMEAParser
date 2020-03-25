@@ -45,6 +45,7 @@ CNMEAParserData::ERROR_E CNMEASentenceGGA::ProcessSentence(char * pCmd, char * p
 		m_SentenceData.m_nHour = (szField[0] - '0') * 10 + (szField[1] - '0');
 		m_SentenceData.m_nMinute = (szField[2] - '0') * 10 + (szField[3] - '0');
 		m_SentenceData.m_nSecond = (szField[4] - '0') * 10 + (szField[5] - '0');
+        m_SentenceData.m_nMillisecond = (szField[7] - '0') * 10;    //add Millisecond parsed by Caesar in 2020/03/16
 	}
 
 	//
@@ -178,4 +179,5 @@ void CNMEASentenceGGA::ResetData(void)
 	m_SentenceData.m_nMinute = 0;
 	m_SentenceData.m_nSatsInView = 0;
 	m_SentenceData.m_nSecond = 0;
+    m_SentenceData.m_nMillisecond = 0;  //add by Caesar in 2020/03/16
 }
